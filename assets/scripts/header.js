@@ -1,16 +1,32 @@
 "use strict";
-// Adapted from https://jsfiddle.net/mariusc23/s6mLJ/31/
 
 var didScroll = false;
 var lastScrollY;
-var delta = 5;
-var header = document.getElementById("site-header");
-var headerHeight = header.offsetHeight;
 var mobileMenuIsOpen = false;
-
-document.addEventListener("scroll", () => {
-  didScroll = true;
+const delta = 5;
+const getDarkOverlay = () => document.getElementById("dark-overlay");
+const getMobileMenuUl = () => document.getElementById("mobile-menu__ul");
+// Reset variables when changing pages
+document.addEventListener("turbolinks:load", () => {
+  didScroll = false;
+  lastScrollY = null;
+  mobileMenuIsOpen = false;
+  // Block scroll on dark-overlay and the ul
+  getMobileMenuUl().addEventListener("touchmove", preventDefaultScroll, {
+    passive: false,
+  });
+  getDarkOverlay().addEventListener("touchmove", preventDefaultScroll, {
+    passive: false,
+  });
 });
+
+document.addEventListener(
+  "scroll",
+  () => {
+    didScroll = true;
+  },
+  { passive: false }
+);
 
 setInterval(() => {
   if (didScroll) {
@@ -18,7 +34,16 @@ setInterval(() => {
   }
 }, 250);
 
+const preventDefaultScroll = (e) => e.preventDefault();
+
+function handleMobileMenuInputClick() {
+  mobileMenuIsOpen = !mobileMenuIsOpen;
+}
+
+// Adapted from https://jsfiddle.net/mariusc23/s6mLJ/31/
 function hasScrolled() {
+  let header = document.getElementById("site-header");
+  let headerHeight = header.offsetHeight;
   if (typeof lastScrollY !== "number") {
     lastScrollY = window.scrollY;
     return;
@@ -52,18 +77,3 @@ function hasScrolled() {
   // Do not allow header to be hidden when mobileMenuIsOpen
   if (mobileMenuIsOpen) header.classList.remove("header-hidden");
 }
-
-function mobileMenuLockScroll() {
-  document.body.classList.toggle("lock-scroll");
-  mobileMenuIsOpen = !mobileMenuIsOpen;
-}
-
-// Disable scroll when dark overlay is activated
-var darkOverlay = document.getElementById("dark-overlay");
-darkOverlay.addEventListener(
-  "touchmove",
-  (e) => {
-    e.preventDefault();
-  },
-  false
-);
