@@ -2,8 +2,8 @@
 @import "mobile_nav";
 
 @mixin header-vertical-margins {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 $social-icon-size: 1.5em;
@@ -19,21 +19,25 @@ $social-icon-size: 1.5em;
   width: 100%;
   will-change: transform;
   transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-  min-height: 3rem;
-  padding: 0.25rem $gutter-padding;
+  min-height: 3em;
+  padding: 0.25em $gutter-padding;
   background-color: darken($wired-purple, 2%);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4), 0 6px 5px 0 rgba(0, 0, 0, 0.1);
   z-index: 1;
 
-  & a {
+  a {
     text-decoration: none;
     font-weight: 600;
     text-align: center;
   }
 
-  & ul,
-  & ol {
+  ul,
+  ol {
     list-style: none;
+  }
+
+  @include mq($from: tablet, $until: desktop) {
+    font-size: 0.75em;
   }
 }
 
@@ -50,12 +54,12 @@ $social-icon-size: 1.5em;
   opacity: 0.85;
   transition: opacity 0.2s;
   will-change: opacity;
-  &:hover,
-  &:focus,
-  &:active {
+  :hover,
+  :focus,
+  :active {
     opacity: 0.95;
   }
-  &[data-force-opaque] {
+  [data-force-opaque] {
     opacity: 1;
   }
 }
@@ -77,28 +81,28 @@ $active-font-weight: 700;
   color: rgba(#fff, 0.8);
   transition: color 0.2s, border-color 0.2s;
   border-bottom: 2px solid transparent;
-  padding: 0 0.1rem;
+  padding: 0 0.1em;
   display: block; // Stop pseudo-element ::after wrapping onto next line in mobile menu
 
-  &:hover,
-  &:focus,
-  &:active {
+  :hover,
+  :focus,
+  :active {
     color: rgba(#fff, 0.95);
     border-color: rgba(#fff, 0.95);
   }
 
-  &:active {
+  :active {
     outline: none;
   }
 
-  &[data-active] {
+  [data-active] {
     font-weight: $active-font-weight;
     color: #fff;
     border-bottom-color: #fff;
   }
 
   // Reserve width for bold text
-  &::after {
+  ::after {
     display: block;
     content: attr(data-content);
     font-weight: $active-font-weight;
@@ -116,9 +120,13 @@ $active-font-weight: 700;
   max-width: 7.5em;
   height: $social-icon-size;
   text-align: left;
-  & > img {
+  > img {
     height: $social-icon-size;
     width: auto;
+  }
+
+  @include mq($until: tablet) {
+    flex-grow: 1;
   }
 }
 
@@ -126,13 +134,25 @@ $active-font-weight: 700;
 .nav-site {
   flex-grow: 1;
   flex-basis: initial;
-  & ul {
+  ul {
     justify-content: center;
   }
 
-  & a {
-    margin: 0.35rem 0.6rem;
+  a {
+    margin: 0.35em 0.6em;
     white-space: nowrap;
+  }
+
+  @include mq($until: tablet) {
+    display: none;
+    ul {
+      justify-content: space-around;
+    }
+  }
+
+  @include mq($until: desktop) {
+    // Push site nav links to second row
+    order: 2;
   }
 }
 
@@ -144,19 +164,19 @@ $active-font-weight: 700;
   justify-content: center;
   align-items: center;
 
-  & ul {
+  ul {
     justify-content: flex-end;
   }
 
-  & a {
-    margin-left: 0.75rem;
+  a {
+    margin-left: 0.75em;
   }
 }
 
 // Both
 .nav-site,
 .nav-social {
-  & ul {
+  ul {
     height: 100%;
     width: 100%;
     list-style: none;
@@ -168,45 +188,7 @@ $active-font-weight: 700;
     flex-wrap: wrap;
     align-items: center;
   }
-  & li {
+  li {
     display: flex;
-  }
-}
-
-/* Mobile */
-@include media-max-sm {
-  .logo-link {
-    flex-grow: 1;
-  }
-
-  .nav-site ul {
-    justify-content: space-around;
-  }
-
-  .nav-site {
-    display: none;
-  }
-}
-
-@include media-max-lg {
-  .site-header {
-    font-size: 0.9em;
-  }
-}
-
-@include media-max-md {
-  // Push site nav links to second row
-  .nav-site {
-    order: 2;
-  }
-
-  .site-header {
-    font-size: 0.75em;
-  }
-}
-
-@include media-max-sm {
-  .site-header {
-    font-size: 1em;
   }
 }

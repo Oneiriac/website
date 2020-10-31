@@ -5,9 +5,12 @@
 
 .membershipPerks {
   display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: grid-auto-resize(320px);
+  grid-gap: 2em;
+  grid-template-columns: grid-auto-resize(20em);
   justify-items: center;
+  @include mq($until: tablet) {
+    grid-template-columns: grid-auto-resize(15em);
+  }
 }
 
 .membershipPerks > * {
@@ -15,10 +18,4 @@
 }
 .membershipPerks img {
   width: 100%;
-}
-
-@include media-max-sm {
-  .membershipPerks {
-    grid-template-columns: grid-auto-resize(240px);
-  }
 }
