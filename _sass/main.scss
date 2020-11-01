@@ -1,0 +1,83 @@
+@import "shared";
+@import "motion";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Fix content jumping issue */
+  overflow-y: scroll;
+  height: 100%;
+}
+
+body {
+  font-family: $wired-font-family;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.page-container {
+  padding-top: 6em;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%; // Fix Safari bug where footer is visible over content
+  overflow: hidden;
+  @include mq($until: tablet) {
+    padding-top: 3em;
+  }
+}
+
+a {
+  color: #a23db2;
+}
+
+.content {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 60rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.5em $gutter-padding 2em;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 2.25em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+p,
+ul,
+ol {
+  line-height: 1.6;
+}
+
+footer {
+  align-self: flex-end;
+  width: 100%;
+  text-align: center;
+  font-size: 0.75em;
+  opacity: 0.8;
+  padding: 0 $gutter-padding 1em;
+}
+
+.no-anim * {
+  &,
+  &::before,
+  &::after {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}

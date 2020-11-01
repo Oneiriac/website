@@ -1,0 +1,21 @@
+---
+---
+
+@import "shared";
+
+.membershipPerks {
+  display: grid;
+  grid-gap: 2em;
+  grid-template-columns: grid-auto-resize(20em);
+  justify-items: center;
+  @include mq($until: tablet) {
+    grid-template-columns: grid-auto-resize(15em);
+  }
+}
+
+.membershipPerks > * {
+  max-width: 100%;
+}
+.membershipPerks img {
+  width: 100%;
+}
